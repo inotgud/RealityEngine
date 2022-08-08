@@ -6,3 +6,4 @@ phantomarcade:Friday Night Funkin Animator
 evilsk8r:Friday Night Funkin Artist
 kawaisprite:Friday Night Funkin Musician
 NonsenseNH:Reality Engine YouTube Button
+Markadams:Volume Bug Fix

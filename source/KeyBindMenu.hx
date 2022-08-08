@@ -317,9 +317,9 @@ class KeyBindMenu extends FlxSubState
 		FlxG.save.data.volDownBind = keys[8];
 		FlxG.save.data.fullscreenBind = keys[9];
 
-		FlxG.sound.muteKeys = [FlxKey.fromString(keys[6])];
-		FlxG.sound.volumeDownKeys = [FlxKey.fromString(keys[8])];
-		FlxG.sound.volumeUpKeys = [FlxKey.fromString(keys[7])];
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 
 		FlxG.save.flush();
 

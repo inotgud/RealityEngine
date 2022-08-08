@@ -49,6 +49,10 @@ class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
     
+	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
+	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+	
 	public static var hmmmmmmmmmmmmmmmm:String;
 	//public static var theRealityenginetitle:String = sys.io.File.getContent('assets/custom/custom_game/title.txt');
 	public static var language:String;
@@ -70,6 +74,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+
 		openSubState(new OpenDiscord());
 		
 		if(FlxG.save.data.muteBind == null)
@@ -153,9 +158,9 @@ class TitleState extends MusicBeatState
 		// It doesn't reupdate the list before u restart rn lmao
 		NoteskinHelpers.updateNoteskins();
 
-		FlxG.sound.muteKeys = [FlxKey.fromString(FlxG.save.data.muteBind)];
-		FlxG.sound.volumeDownKeys = [FlxKey.fromString(FlxG.save.data.volDownBind)];
-		FlxG.sound.volumeUpKeys = [FlxKey.fromString(FlxG.save.data.volUpBind)];
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 
 		FlxG.mouse.visible = false;
 

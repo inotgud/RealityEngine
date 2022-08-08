@@ -598,9 +598,10 @@ class Controls extends FlxActionSet
 		inline bindKeys(Control.PAUSE, [FlxKey.fromString(FlxG.save.data.pauseBind)]);
 		inline bindKeys(Control.RESET, [FlxKey.fromString(FlxG.save.data.resetBind)]);
 
-		FlxG.sound.muteKeys = [FlxKey.fromString(FlxG.save.data.muteBind)];
-		FlxG.sound.volumeDownKeys = [FlxKey.fromString(FlxG.save.data.volDownBind)];
-		FlxG.sound.volumeUpKeys = [FlxKey.fromString(FlxG.save.data.volUpBind)];
+		
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 	}
 
 	function removeKeyboard()

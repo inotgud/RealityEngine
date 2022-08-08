@@ -32,9 +32,9 @@ class KeyBinds
 		FlxG.save.data.resetBind = "R";
 		FlxG.save.data.gpresetBind = "SELECT";
 
-		FlxG.sound.muteKeys = ["ZERO", "NUMPADZERO"];
-		FlxG.sound.volumeDownKeys = ["MINUS", "NUMPADMINUS"];
-		FlxG.sound.volumeUpKeys = ["PLUS", "NUMPADPLUS"];
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 		PlayerSettings.player1.controls.loadKeyBinds();
 	}
 
