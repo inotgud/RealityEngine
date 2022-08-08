@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="xman3d v1.png">
+	<!-- Created with Adobe Animate version 21.0.9.42677 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="down" x="0" y="0" width="235" height="420"/>
+	<SubTexture name="left0000" x="235" y="0" width="235" height="420"/>
+	<SubTexture name="right0000" x="470" y="0" width="235" height="420"/>
+	<SubTexture name="up0000" x="705" y="0" width="235" height="420"/>
+	<SubTexture name="idle0000" x="0" y="420" width="235" height="420"/>
+	<SubTexture name="idle0001" x="235" y="420" width="235" height="420"/>
+	<SubTexture name="idle0002" x="470" y="420" width="235" height="420"/>
+</TextureAtlas>

@@ -1,0 +1,3 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="logoold.png"><SubTexture name="logoold idle0000" x="0" y="0" width="757" height="373" frameX="-10" frameY="-26" frameWidth="806" frameHeight="429" />
+</TextureAtlas>

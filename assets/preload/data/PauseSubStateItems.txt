@@ -1,0 +1,7 @@
+Resume
+Restart Song
+Options
+Chart Editor
+Change Song
+Toggle Developer/Charter
+Exit to menu

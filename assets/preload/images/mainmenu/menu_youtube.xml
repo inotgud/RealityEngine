@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FNF_main_menu_assets.png">
+	<!-- Created with Adobe Animate version 21.0.9.42677 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="youtube basic0000" x="1440" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0001" x="1877" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0002" x="2314" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0003" x="2751" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0004" x="3188" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0005" x="3625" y="2180" width="437" height="120"/>
+	<SubTexture name="youtube basic0006" x="0" y="2397" width="437" height="120"/>
+	<SubTexture name="youtube basic0007" x="437" y="2397" width="437" height="120"/>
+	<SubTexture name="youtube basic0008" x="874" y="2397" width="437" height="120"/>
+	<SubTexture name="youtube white0000" x="1311" y="2397" width="558" height="174"/>
+	<SubTexture name="youtube white0001" x="1869" y="2397" width="558" height="174"/>
+	<SubTexture name="youtube white0002" x="2427" y="2397" width="558" height="174"/>
+</TextureAtlas>
