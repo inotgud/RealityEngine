@@ -1,6 +1,6 @@
 # Friday Night Funkin' - Reality Engine
-![](https://i.hizliresim.com/cglcucm.png)
-
+![](https://i.hizliresim.com/cglcucm.png)          
+Reality Engine is only supported on Windows for now!
 # Credits
  * GoodTR - Main Developer
  * YE2410 - Developer/Artist
@@ -16,8 +16,10 @@
  
 # Mod Support
 This engine has mod support
-# New Chart Editor
-![](https://i.hizliresim.com/77nyzui.png)
+# Stage Editor
+![](https://i.hizliresim.com/eeywuqa.png)
+# Week Editor
+![](https://i.hizliresim.com/gy4inxu.png)
  # Installation
 Install Haxe [4.2.5/4.1.5](https://haxe.org/download/)           
  * haxelib install lime 7.9.0            
