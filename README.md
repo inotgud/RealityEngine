@@ -30,7 +30,6 @@ A FNF Engine based on Kade Engine. This engine is softcoded so you don't need to
 * Space
 ## Special Thanks to:
 * KadeDev - Original engine
-* EmreFnfGithub - Showcase of the engine
 * FNF Crew
    * ninjamuffin99 - Main Developer
    * PhantomArcade - Animator, Artist
