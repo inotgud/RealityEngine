@@ -27,7 +27,7 @@ A FNF Engine based on Kade Engine. This engine is softcoded so you don't need to
 ### Credits to:
 * GoodTR - Main Developer, Creator of the Engine
 * YE2410 - Developer, Artist
-* BernardoGP4504
+* BernardoGP4504 - Helper, Description page
 * Space
 ## Special Thanks to:
 * KadeDev - Original engine
