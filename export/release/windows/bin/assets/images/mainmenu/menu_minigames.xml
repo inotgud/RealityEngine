@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="menu_minigames.png"><SubTexture name="minigames white0000" x="0" y="0" width="935" height="172" frameX="-8" frameY="-2" frameWidth="958" frameHeight="174" />
+<SubTexture name="minigames basic0000" x="0" y="172" width="647" height="125" frameX="-19" frameY="-14" frameWidth="691" frameHeight="141" />
+</TextureAtlas>

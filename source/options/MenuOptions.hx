@@ -47,7 +47,7 @@ class MenuOptions extends MusicBeatState
 				FlxG.switchState(new options.GamePlaySub());
                 description = "Gameplay option";
 			case 'Appearance':
-				openSubState(new options.AppearanceSub());
+				FlxG.switchState(new options.AppearanceSub());
                 description = "Appearance";
 			case 'Misc':
 				FlxG.switchState(new options.MiscState());
@@ -122,17 +122,14 @@ class MenuOptions extends MusicBeatState
                 }
                 
             selectorLeft = new Alphabet(0, 0, '>', true, false);
-                selectorLeft.color = FlxColor.CYAN;
-                add(selectorLeft);
-            selectorRight = new Alphabet(0, 0, '<', true, false);
-                selectorRight.color = FlxColor.CYAN;
-                add(selectorRight);
-            
-            	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "THIS OPTIONS BETA! if you want to enter real options click real options", 12);
-        versionShit.scrollFactor.set();
-        versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        add(versionShit);
+            selectorLeft.color = FlxColor.CYAN;
+            add(selectorLeft);
 
+            selectorRight = new Alphabet(0, 0, '<', true, false);
+            selectorRight.color = FlxColor.CYAN;
+            add(selectorRight);
+
+            changeSelection();
             super.create();
         }
     override function update(elapsed:Float)
@@ -154,6 +151,10 @@ class MenuOptions extends MusicBeatState
             if(controls.BACK)
                 {
                     FlxG.switchState(new MainMenuState());
+                }
+            if (FlxG.mouse.wheel != 0)
+                {
+                    changeSelection(-FlxG.mouse.wheel);
                 }
             
         }

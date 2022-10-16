@@ -500,8 +500,7 @@ class Stage extends MusicBeatState
 								
 								swagBacks['tankRolling'] = tankRolling;
 					toAdd.push(tankRolling);
-				
-								var ground:FlxSprite = new FlxSprite(-420, -150).loadGraphic(Paths.image('warzone/tankGround'));
+					var ground:FlxSprite = new FlxSprite(-420, -150).loadGraphic(Paths.image('warzone/tankGround'));
 								ground.scrollFactor.set();
 								ground.antialiasing = true;
 								ground.setGraphicSize(Std.int(ground.width * 1.15));
@@ -509,7 +508,14 @@ class Stage extends MusicBeatState
 
 								ground.updateHitbox();
 								swagBacks['ground'] = ground;
+								var tankX:Float = 400;
+	                       var tankSpeed:Float = FlxG.random.float(5, 7);
+	                  var tankAngle:Float = FlxG.random.int(-90, 45);
 					toAdd.push(ground);
+					tankAngle += 0 * tankSpeed;
+					tankRolling.angle = tankAngle - 90 + 15;
+					tankRolling.x = tankX + 1500 * Math.cos(Math.PI / 180 * (1 * tankAngle + 180));
+					tankRolling.y = 1300 + 1100 * Math.sin(Math.PI / 180 * (1 * tankAngle + 180));
 					var foreGround0 = new FlxSprite(-500, 600);
 					foreGround0.scrollFactor.set(1.7, 1.5);
 					foreGround0.antialiasing = FlxG.save.data.antialiasing;
@@ -620,6 +626,7 @@ class Stage extends MusicBeatState
 					swagBacks['ruins'] = ruins;
 					toAdd.push(ruins);
 
+
 					var smokeLeft:FlxSprite = new FlxSprite(-200,-100);
 								smokeLeft.frames = Paths.getSparrowAtlas('warzone/smokeLeft');
 								smokeLeft.animation.addByPrefix('idle', 'SmokeBlurLeft ', 24, true);
@@ -665,7 +672,14 @@ class Stage extends MusicBeatState
 
 								ground.updateHitbox();
 								swagBacks['ground'] = ground;
+								var tankX:Float = 400;
+	                       var tankSpeed:Float = FlxG.random.float(5, 7);
+	                  var tankAngle:Float = FlxG.random.int(-90, 45);
 					toAdd.push(ground);
+					tankAngle += 0 * tankSpeed;
+					tankRolling.angle = tankAngle - 90 + 15;
+					tankRolling.x = tankX + 1500 * Math.cos(Math.PI / 180 * (1 * tankAngle + 180));
+					tankRolling.y = 1300 + 1100 * Math.sin(Math.PI / 180 * (1 * tankAngle + 180));
 					var foreGround0 = new FlxSprite(-500, 600);
 					foreGround0.scrollFactor.set(1.7, 1.5);
 					foreGround0.antialiasing = FlxG.save.data.antialiasing;
@@ -729,6 +743,27 @@ class Stage extends MusicBeatState
 						layInFront[2].push(foreGround5);
 					}
 
+					var tankmanRun:FlxTypedGroup<TankmenBG> = new FlxTypedGroup<TankmenBG>();
+					add(tankmanRun);
+
+					var firstTank:TankmenBG = new TankmenBG(20, 500, true);
+					firstTank.resetShit(20, 600, true);
+					firstTank.strumTime = 10;
+					tankmanRun.add(firstTank);
+
+					for (i in 0...TankmenBG.animationNotes.length)
+					{
+						if(FlxG.random.bool(16)) {
+							var tankBih = tankmanRun.recycle(TankmenBG);
+							tankBih.strumTime = TankmenBG.animationNotes[i][0];
+							tankBih.resetShit(500, 200 + FlxG.random.int(50, 100), TankmenBG.animationNotes[i][1] < 2);
+							tankmanRun.add(tankBih);
+						}
+					}
+
+					add(tankmanRun);
+
+					
 					}
 			default:
 				{

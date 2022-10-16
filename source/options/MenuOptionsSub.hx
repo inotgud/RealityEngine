@@ -28,29 +28,44 @@ using StringTools;
 
 class MenuOptionsSub extends MusicBeatSubstate
 {
-    var blackBox:FlxSprite;
+    var description:String;
     private var grpOptions:FlxTypedGroup<Alphabet>;
-    var options:Array<String> = ['', 'Language', 'Gameplay', 'Appearance', 'Misc', 'Saves', 'Real Options'];
+    var options:Array<String>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
+    var icon:String;
+    var descText:FlxText;
+    var iconArray:Array<HealthIcon> = [];
+    var optionText:Alphabet;
 
 	function optionEnter(label:String) {
 		switch(label) {
             case 'Language':
-				FlxG.switchState(new options.LanguageState());
+				//FlxG.switchState(new options.LanguageState());
+                description = "Your Friday Night Language";
 			case 'Gameplay':
-				FlxG.switchState(new options.GamePlaySub());
+				//FlxG.switchState(new options.GamePlaySub());
+                description = "Gameplay option";
 			case 'Appearance':
-				openSubState(new options.AppearanceSub());
+				//FlxG.switchState(new options.AppearanceSub());
+                description = "Appearance";
 			case 'Misc':
-				openSubState(new options.MiscSub());
+				//FlxG.switchState(new options.MiscState());
+                description = "Misc";
 			case 'Saves':
-				openSubState(new options.SavesSub());
+				//FlxG.switchState(new options.SavesState());
+                description = "Your PC FNF Option";
             case 'Real Options':
-                FlxG.switchState(new OptionsDirect());
+                //FlxG.switchState(new OptionsDirect());
+                description = "Old Options";
+            default:
+                //CustomOptions.optionName = options[curSelected];
+                //FlxG.switchState(new options.CustomOptions());
+                description = "";
 		}
 	}
 
+   
     var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
@@ -61,10 +76,39 @@ class MenuOptionsSub extends MusicBeatSubstate
             DiscordClient.changePresence("In the Options", null);
             #end
 
-            blackBox = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		    add(blackBox);
-
-            blackBox.alpha = 0.6;
+            //OPTIONS JSON
+            var jsonData = Paths.loadOptionsJson("options");
+				if (jsonData == null)
+				{
+					Debug.logError('Options Error!');
+					return;
+				}
+                //set options json
+				var data:MenuOptions.OptionJson = cast jsonData;
+                options = data.options;
+            //COLORED BG
+            var bgColors:Array<String> = ['#314d7f', '#4e7093', '#70526e', '#594465'];
+            var colorRotation:Int = 1;
+    
+            var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.loadImage("menuDesat"));
+    
+            menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+            menuBG.updateHitbox();
+            menuBG.screenCenter();
+            menuBG.antialiasing = FlxG.save.data.antialiasing;
+            menuBG.scrollFactor.set();
+            add(menuBG);
+    
+            FlxTween.color(menuBG, 2, menuBG.color, FlxColor.fromString(bgColors[colorRotation]));
+    
+            new FlxTimer().start(2, function(tmr:FlxTimer)
+            {
+                FlxTween.color(menuBG, 2, menuBG.color, FlxColor.fromString(bgColors[colorRotation]));
+                if (colorRotation < (bgColors.length - 1))
+                    colorRotation++;
+                else
+                    colorRotation = 0;
+            }, 0);
 
             grpOptions = new FlxTypedGroup<Alphabet>();
 		    add(grpOptions);
@@ -73,22 +117,26 @@ class MenuOptionsSub extends MusicBeatSubstate
                 {
                     var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
                     optionText.screenCenter();
+                    optionText.scrollFactor.set();
                     optionText.y += (100 * (i - (options.length / 2))) + 50;
                     grpOptions.add(optionText);
+                    
                 }
                 
             selectorLeft = new Alphabet(0, 0, '>', true, false);
-                selectorLeft.color = FlxColor.CYAN;
-                add(selectorLeft);
-            selectorRight = new Alphabet(0, 0, '<', true, false);
-                selectorRight.color = FlxColor.CYAN;
-                add(selectorRight);
-            
-            	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "THIS OPTIONS BETA! if you want to enter real options click real options", 12);
-        versionShit.scrollFactor.set();
-        versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        add(versionShit);
+            selectorLeft.color = FlxColor.CYAN;
+            add(selectorLeft);
 
+            selectorRight = new Alphabet(0, 0, '<', true, false);
+            selectorRight.color = FlxColor.CYAN;
+            add(selectorRight);
+            
+            var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "THIS OPTIONS BETA! if you want to enter real options click real options", 12);
+            versionShit.scrollFactor.set();
+            versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            add(versionShit);
+
+            changeSelection();
             super.create();
         }
     override function update(elapsed:Float)
@@ -109,8 +157,11 @@ class MenuOptionsSub extends MusicBeatSubstate
                 }
             if(controls.BACK)
                 {
-                            close();
-                   
+                    close();
+                }
+            if (FlxG.mouse.wheel != 0)
+                {
+                    changeSelection(-FlxG.mouse.wheel);
                 }
             
         }
@@ -126,7 +177,9 @@ class MenuOptionsSub extends MusicBeatSubstate
             for (item in grpOptions.members) {
                 item.targetY = bullShit - curSelected;
                 bullShit++;
-    
+
+
+
                 item.alpha = 0.6;
                 if (item.targetY == 0) {
                     item.alpha = 1;

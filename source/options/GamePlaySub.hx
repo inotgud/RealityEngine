@@ -29,7 +29,7 @@ using StringTools;
 class GamePlaySub extends MusicBeatState
 {
     private var grpOptions:FlxTypedGroup<Alphabet>;
-    var options:Array<String> = ['Toggle Dark Mode', 'Toggle Light Mode', 'Toggle Practatice Mode','Set Menu Music', 'Edit Keybindings','Update Announcaments On','Colored Menu','Redesigned Menu', 'Set Username', 'Scroll Speed', 'Offset Thing', 'Ghost Tap', 'Bot Play', 'Down Scroll', 'Reset Button On', 'Reset Button Off', 'Customize Gameplay'];
+    var options:Array<String> = ['System Cursor','Toggle Dark Mode', 'Toggle Light Mode', 'Toggle Practatice Mode','Set Menu Music', 'Edit Keybindings','Update Announcaments On','Colored Menu','Redesigned Menu', 'Set Username', 'Scroll Speed', 'Offset Thing', 'Ghost Tap', 'Bot Play', 'Down Scroll', 'Reset Button On', 'Reset Button Off', 'Customize Gameplay'];
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
     public static var hm:Bool = false;
@@ -63,7 +63,9 @@ class GamePlaySub extends MusicBeatState
                 Question.isFlashing = false;
                 Question.isFPS = false;
                 Question.isScrollSpeed = false;
+                Question.isMidSongEvent = false;
                 Question.isRedesigned = false;
+                Question.isSystemCursor = false;
                 Question.isColored = true;
                 Question.isBotPlay = false;
                 Question.isScroll = false;
@@ -75,9 +77,11 @@ class GamePlaySub extends MusicBeatState
                 Question.isWatermark = false;
                 Question.isFlashing = false;
                 Question.isFPS = false;
+                Question.isMidSongEvent = false;
                 Question.isScrollSpeed = false;
                 Question.isRedesigned = true;
                 Question.isColored = false;
+                Question.isSystemCursor = false;
                 Question.isBotPlay = false;
                 Question.isScroll = false;
                 Question.isTap = false;
@@ -85,36 +89,19 @@ class GamePlaySub extends MusicBeatState
 			case 'Set Username':
 				FlxG.switchState(new SetUser());
 			case 'Ghost Tap':
-                Question.isMenuSong = false;
-                Question.isAntialiasing = false;
-                Question.isWatermark = false;
-                Question.isFlashing = false;
-                Question.isFPS = false;
-                Question.isScrollSpeed = false;
-                Question.isRedesigned = false;
-                Question.isColored = false;
-                Question.isBotPlay = false;
-                Question.isScroll = false;
-                Question.isTap = true;
-                openSubState(new options.Question());
+                FlxG.save.data.ghost = !FlxG.save.data.ghost;
+                trace('GhostTap : ' + FlxG.save.data.botplay);
+                FlxG.sound.play(Paths.sound('confirmMenu'));
             case 'Edit Keybindings':
 				openSubState(new KeyBindMenu());
             case 'Bot Play':
-                Question.isMenuSong = false;
-                Question.isAntialiasing = false;
-                Question.isWatermark = false;
-                Question.isFlashing = false;
-                Question.isFPS = false;
-                Question.isScrollSpeed = false;
-                Question.isRedesigned = false;
-                Question.isColored = false;
-                Question.isTap = false;
-                Question.isBotPlay = true;
-                Question.isScroll = false;
-                openSubState(new options.Question());
+                FlxG.save.data.botplay = !FlxG.save.data.botplay;
+                trace('BotPlay : ' + FlxG.save.data.botplay);
+                FlxG.sound.play(Paths.sound('confirmMenu'));
             case 'Down Scroll':
                 Question.isMenuSong = false;
                 Question.isAntialiasing = false;
+                Question.isMidSongEvent = false;
                 Question.isWatermark = false;
                 Question.isFlashing = false;
                 Question.isFPS = false;
@@ -122,6 +109,7 @@ class GamePlaySub extends MusicBeatState
                 Question.isRedesigned = false;
                 Question.isColored = false;
                 Question.isBotPlay = false;
+                Question.isSystemCursor = false;
                 Question.isScroll = true;
                 Question.isTap = false;
                 openSubState(new options.Question());
@@ -132,16 +120,33 @@ class GamePlaySub extends MusicBeatState
                 Question.isFlashing = false;
                 Question.isFPS = false;
                 Question.isScrollSpeed = true;
+                Question.isMidSongEvent = false;
                 Question.isRedesigned = false;
                 Question.isColored = false;
                 Question.isBotPlay = false;
                 Question.isScroll = false;
+                Question.isSystemCursor = false;
                 Question.isTap = false;
                 openSubState(new options.Question());
             case 'Reset Button On':
                 FlxG.save.data.resetButton = "on";
             case 'Reset Button Off':
                 FlxG.save.data.resetButton = "off";
+            case 'System Cursor':
+                Question.isMenuSong = false;
+                Question.isAntialiasing = false;
+                Question.isWatermark = false;
+                Question.isFlashing = false;
+                Question.isFPS = false;
+                Question.isScrollSpeed = false;
+                Question.isMidSongEvent = false;
+                Question.isRedesigned = false;
+                Question.isColored = false;
+                Question.isBotPlay = false;
+                Question.isScroll = false;
+                Question.isTap = false;
+                Question.isSystemCursor = true;
+                openSubState(new options.Question());
 		}
 	}
 
@@ -198,7 +203,7 @@ class GamePlaySub extends MusicBeatState
             selectorRight = new Alphabet(0, 0, '<', true, false);
                 add(selectorRight);
             
-            
+            changeSelection();
             super.create();
         }
     override function update(elapsed:Float)

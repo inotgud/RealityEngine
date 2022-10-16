@@ -173,7 +173,7 @@ class EngineEditorsState extends MusicBeatState
 						FlxG.switchState(new engineEditors.MidSongEventEditor());
 
 					case 'Credits Editor':
-						FlxG.switchState(new engineEditors.CreditsEditor());
+						Debug.displayAlert("Credits Editor", "Credits Editor is under maintenance for a while, add credits from json. Sorry for that");
 
 					case 'Stage Editor':
 						FlxG.switchState(new engineEditors.StageEditor());

@@ -103,6 +103,14 @@ class Main extends Sprite
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
+		//custom cursor image
+		if(FlxG.save.data.systemCursorData == true)
+			{
+				FlxG.mouse.useSystemCursor = true;
+			}
+		else{
+			FlxG.mouse.useSystemCursor = false;
+		}
 		#if !mobile
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);

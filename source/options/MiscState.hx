@@ -24,6 +24,9 @@ import Controls;
 #if FEATURE_DISCORD
 import Discord.DiscordClient;
 #end
+import openfl.display.FPS;
+import openfl.Lib;
+
 using StringTools;
 
 class MiscState extends MusicBeatState
@@ -37,18 +40,8 @@ class MiscState extends MusicBeatState
 	function optionEnter(label:String) {
 		switch(label) {
             case 'FPS Counter':
-                Question.isAntialiasing = false;
-                Question.isWatermark = false;
-                Question.isFlashing = false;
-                Question.isFPS = true;
-                Question.isScrollSpeed = false;
-                Question.isRedesigned = false;
-                Question.isColored = false;
-                Question.isBotPlay = false;
-                Question.isScroll = false;
-                Question.isTap = false;
-                
-                openSubState(new options.Question());
+                FlxG.save.data.fps = !FlxG.save.data.fps;
+                (cast(Lib.current.getChildAt(0), Main)).toggleFPS(FlxG.save.data.fps);
             case 'Flashing Lights':
                 Question.isAntialiasing = false;
                 Question.isWatermark = false;
@@ -140,6 +133,7 @@ class MiscState extends MusicBeatState
             selectorRight = new Alphabet(0, 0, '<', true, false);
                 add(selectorRight);
             
+            changeSelection();
             
             super.create();
         }

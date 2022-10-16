@@ -1,0 +1,22 @@
+{
+  "dialogue": [
+    {
+      "character": "bf",
+      "isDad": false,
+      "message": "hello, this is dialogue test",
+      "isFinished": false
+    },
+    {
+      "character": "dad",
+      "isDad": true,
+      "message": "great",
+      "isFinished": false
+    },
+    {
+      "character": "bf",
+      "isDad": false,
+      "message": "hmm",
+      "isFinished": true
+    }
+  ]
+}

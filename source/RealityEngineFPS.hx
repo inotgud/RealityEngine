@@ -47,7 +47,7 @@ class RealityEngineFPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat(openfl.utils.Assets.getFont("assets/fonts/vcr.ttf").fontName, 14, color);
+		defaultTextFormat = new TextFormat(openfl.utils.Assets.getFont("assets/fonts/muffengineReality.ttf").fontName, 14, color);
 		text = "FPS: ";
 		width += 200;
 
@@ -111,11 +111,7 @@ class RealityEngineFPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			text = (FlxG.save.data.fps ? "FPS: "
-				+ currentFPS
-				+ "\n"
-				+ "Friday Night Funkin' " + MainMenuState.gameVer
-				+ (Main.watermarks ? "\nReality Engine Release " : "") : (Main.watermarks ? "Reality Engine Release " : ""));
+			text = "FPS: "+ currentFPS;
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
 			text += "\ntotalDC: " + Context3DStats.totalDrawCalls();

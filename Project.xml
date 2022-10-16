@@ -89,6 +89,7 @@
 
 	<haxelib name="actuate" />
 	<haxelib name="extension-webm"/>
+	<haxelib name="winapi"/>
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />

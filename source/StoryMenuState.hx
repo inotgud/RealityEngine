@@ -197,21 +197,20 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
-		#if sys
-		if(sys.FileSystem.exists("assets/custom/custom_weeks/weekSettings/" + weeksArray[curWeek] + "/loadChar.txt"))
+		var charJsonShit:String = loadFromWeekJson(weeksArray[curWeek]).character;
+
+		if(charJsonShit != "")
 			{
 				remove(grpWeekCharacters);
 				grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 				grpWeekCharacters.add(new MenuCharacter(450, 25, 0.7, true));
-				var readCharacters:String = sys.io.File.getContent("assets/custom/custom_weeks/weekSettings/" + weeksArray[curWeek] + "/loadChar.txt");
-				grpWeekCharacters.members[0].setCharacter(readCharacters);
+				grpWeekCharacters.members[0].setCharacter(charJsonShit);
 				add(grpWeekCharacters);
 				//grpWeekCharacters.updateHitbox();
 			}
 		else{
 			remove(grpWeekCharacters);
 		}
-		#end
 		updateText();
 
 		var bullShit:Int = 0;
@@ -225,6 +224,8 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		trace("Line 165");
+
+        changeWeek();
 
 		super.create();
 	}
@@ -240,14 +241,14 @@ class StoryMenuState extends MusicBeatState
 			{
 				scoreText.text = "WEEK SCORE:" + lerpScore;
 			}
-			if(MainMenuState.language == "tr")
-				{
-					scoreText.text = "HAFTA SKORU:" + lerpScore;
-				}
-				if(MainMenuState.language == "ru")
-					{
-						scoreText.text = "ОЦЕНКА НЕДЕЛИ:" + lerpScore;
-					}
+		if(MainMenuState.language == "tr")
+			{
+				scoreText.text = "HAFTA SKORU:" + lerpScore;
+			}
+		if(MainMenuState.language == "ru")
+			{
+				scoreText.text = "ОЦЕНКА НЕДЕЛИ:" + lerpScore;
+			}
 		
 
 		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
@@ -317,6 +318,11 @@ class StoryMenuState extends MusicBeatState
 				if (FlxG.keys.justPressed.E)
 				{
 					FlxG.switchState(new engineEditors.WeekEditor());
+				}
+
+				if (FlxG.mouse.wheel != 0)
+				{
+					changeWeek(-FlxG.mouse.wheel);
 				}
 
 				if (controls.RIGHT)
@@ -442,7 +448,6 @@ class StoryMenuState extends MusicBeatState
 	
 			if (rawJson == null)
 			{
-				// why the fuck did i do this lmao
 				#if sys
 				rawJson = File.getContent(Paths.RealityJson('custom/custom_weeks/' + jsonInput)).trim();
 				#else
@@ -456,7 +461,6 @@ class StoryMenuState extends MusicBeatState
 			while (!rawJson.endsWith("}"))
 			{
 				rawJson = rawJson.substr(0, rawJson.length - 1);
-				// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
 			}
 			#end
 	
@@ -487,21 +491,20 @@ class StoryMenuState extends MusicBeatState
 				item.alpha = 0.6;
 			bullShit++;
 		}
-		#if sys
-		if(sys.FileSystem.exists("assets/custom/custom_weeks/weekSettings/" + weeksArray[curWeek] + "/loadChar.txt"))
+		var charJsonShit:String = loadFromWeekJson(weeksArray[curWeek]).character;
+
+		if(charJsonShit != "")
 			{
 				remove(grpWeekCharacters);
 				grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 				grpWeekCharacters.add(new MenuCharacter(450, 25, 0.7, true));
-				var readCharacters:String = sys.io.File.getContent("assets/custom/custom_weeks/weekSettings/" + weeksArray[curWeek] + "/loadChar.txt");
-				grpWeekCharacters.members[0].setCharacter(readCharacters);
+				grpWeekCharacters.members[0].setCharacter(charJsonShit);
 				add(grpWeekCharacters);
 				//grpWeekCharacters.updateHitbox();
 			}
 		else{
 			remove(grpWeekCharacters);
 		}
-		#end
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
@@ -543,12 +546,14 @@ class StoryMenuState extends MusicBeatState
 typedef SwagWeek =
 {
 	var songs:Array<Dynamic>;
+	var ?character:String;
 }
 
 
 class Week
 {
 	public var songs:Array<Dynamic>;
+	var character:String = "";
 
 	public function new(swagWeek:SwagWeek)
 	{
@@ -558,7 +563,8 @@ class Week
 	public static function createWeek():SwagWeek
 	{
 		var week:SwagWeek = {
-			songs: ["Bopeebo", "Fresh", "Dad Battle"]
+			songs: ["Bopeebo", "Fresh", "Dad Battle"],
+			character: "dad"
 		};
 		return week;
 	}

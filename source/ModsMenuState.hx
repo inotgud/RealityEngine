@@ -115,8 +115,8 @@ class ModsMenuState extends MusicBeatState
 		descText.borderSize = 2.4;
 		add(descText);
 
-		button = new FlxButton(150, 20, "Create Mod", createMod);
-        add(button);
+		//button = new FlxButton(150, 20, "Create Mod", createMod);
+        //add(button);
 
 		remove(modText);
 		modSelectedName = mods[curSelected].modName;
@@ -149,6 +149,7 @@ class ModsMenuState extends MusicBeatState
 						remove(modText);
 						modSelectedName = mods[curSelected].modName;
 						selectMod(modSelectedName);
+						FlxG.camera.flash(FlxColor.BLACK, 0.5);
 					}
 					if (downP)
 					{
@@ -157,6 +158,7 @@ class ModsMenuState extends MusicBeatState
 						remove(modText);
 						modSelectedName = mods[curSelected].modName;
 						selectMod(modSelectedName);
+						FlxG.camera.flash(FlxColor.BLACK, 0.5);
 					}
 					if (rightP)
 						{
@@ -165,6 +167,7 @@ class ModsMenuState extends MusicBeatState
 							remove(modText);
 							modSelectedName = mods[curSelected].modName;
 							selectMod(modSelectedName);
+							FlxG.camera.flash(FlxColor.BLACK, 0.5);
 						}
 						if (leftP)
 							{
@@ -173,6 +176,7 @@ class ModsMenuState extends MusicBeatState
 								remove(modText);
 								modSelectedName = mods[curSelected].modName;
 								selectMod(modSelectedName);
+								FlxG.camera.flash(FlxColor.BLACK, 0.5);
 							}
 			
 		if (controls.BACK)
@@ -264,9 +268,9 @@ class ModsMenuState extends MusicBeatState
 			bg.updateHitbox();
 			bg.screenCenter();
 			bg.antialiasing = FlxG.save.data.antialiasing;
+			bg.color = FlxColor.fromString(sys.io.File.getContent('mods/' + mods[curSelected].modName + '/color.txt'));
 			add(bg);
 			ending = true;
-
 			var modText2:Alphabet = new Alphabet(0, (70 * 1) + -130, mods[curSelected].modName, true, false);
 			modText2.isMenuItem = false;
 			modText2.y += 290;
@@ -280,8 +284,11 @@ class ModsMenuState extends MusicBeatState
 			add(selector);
 			add(modText2);
 
+			modIcon = new FlxSprite(52, 125).loadGraphic('mods/' + mods[curSelected].modName + '/icon.png');
+			modIcon.setGraphicSize(Std.int(modIcon.width * 0.4));
+			add(modIcon);
 			button = new FlxButton(150, 20, "Create Mod", createMod);
-			add(button);
+			//add(button);
 			
 		}
 

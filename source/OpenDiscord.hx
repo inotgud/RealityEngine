@@ -47,10 +47,9 @@ using StringTools;
 
 class OpenDiscord extends MusicBeatSubstate
 {
-	var hmm:Bool = false;
 	override function create(){
 		FlxG.mouse.visible = true;
-		if(hmm == true)
+	    if(FlxG.save.data.realitydc == true)
 			{
 				close();
 			}
@@ -65,11 +64,13 @@ class OpenDiscord extends MusicBeatSubstate
 
 		var save:FlxButton = new FlxButton(550, 550, "Join Discord", function(){
 			FlxG.openURL("https://discord.gg/VjG7PZ6ksy");
-			hmm = true;
+			FlxG.save.data.realitydc = true;
+			FlxG.save.data.joinedc = true;
 			close();
 		});
         add(save);
 
+		FlxG.save.data.realitydc = true;
 		super.create();
 	}
 
@@ -77,7 +78,7 @@ class OpenDiscord extends MusicBeatSubstate
 		{
 			if(FlxG.keys.justPressed.ESCAPE)
 				{
-					hmm = true;
+					FlxG.save.data.realitydc = true;
 					close();
 				}
 			super.update(elapsed);

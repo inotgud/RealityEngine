@@ -17,6 +17,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import engineEditors.MidSongEventEditor;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -43,6 +44,10 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
+		if(PlayState.eventeditortesting == true)
+			{
+				menuItems = ['Resume',"Back Event Editor", "(Not Save Events) Exit"];
+			}
 		if (PlayState.instance.useVideo)
 		{
 			menuItems.remove("Resume");
@@ -183,6 +188,11 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
+		if (FlxG.mouse.wheel != 0)
+			{
+				changeSelection(-FlxG.mouse.wheel);
+			}
+
 		if (controls.ACCEPT && !FlxG.keys.pressed.ALT)
 		{
 			var daSelected:String = menuItems[curSelected];
@@ -265,6 +275,63 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.switchState(new FreeplayState());
 				case "Toggle  Bot  Play":
 					FlxG.save.data.botplay = "on";
+				case "Back Event Editor":
+					   MidSongEventEditor.code = PlayState.oldcode;
+					   PlayState.oldcode = "";
+					   MidSongEventEditor.song = PlayState.olds;
+					   PlayState.eventeditortesting = false;
+					   PlayState.eventeditortestscript = "";
+					   FlxG.switchState(new MidSongEventEditor());
+			    case "(Not Save Events) Exit":
+					PlayState.oldcode = "";
+					PlayState.eventeditortesting = false;
+					MidSongEventEditor.song = "";
+					PlayState.eventeditortestscript = "";
+					if(FlxG.save.data.oneMinutes == "on")
+						{
+							FlxG.save.data.specialCharter = "off";
+							FlxG.save.data.oneMinutes = "off";
+						}
+					PlayState.startTime = 0;
+					if (PlayState.instance.useVideo)
+					{
+						GlobalVideo.get().stop();
+						PlayState.instance.remove(PlayState.instance.videoSprite);
+						PlayState.instance.removedVideo = true;
+					}
+					if (PlayState.loadRep)
+					{
+						FlxG.save.data.botplay = false;
+						FlxG.save.data.scrollSpeed = 1;
+						FlxG.save.data.downscroll = false;
+					}
+					PlayState.loadRep = false;
+					PlayState.stageTesting = false;
+					#if FEATURE_LUAMODCHART
+					if (PlayState.luaModchart != null)
+					{
+						PlayState.luaModchart.die();
+						PlayState.luaModchart = null;
+					}
+					#end
+					if (FlxG.save.data.fpsCap > 340)
+						(cast(Lib.current.getChildAt(0), Main)).setFPSCap(120);
+
+					PlayState.instance.clean();
+
+					if (PlayState.isStoryMode)
+					{
+						GameplayCustomizeState.freeplayBf = 'bf';
+						GameplayCustomizeState.freeplayDad = 'dad';
+						GameplayCustomizeState.freeplayGf = 'gf';
+						GameplayCustomizeState.freeplayNoteStyle = 'normal';
+						GameplayCustomizeState.freeplayStage = 'stage';
+						GameplayCustomizeState.freeplaySong = 'bopeebo';
+						GameplayCustomizeState.freeplayWeek = 1;
+						FlxG.switchState(new StoryMenuState());
+					}
+					else
+						FlxG.switchState(new FreeplayState());
 				default:
 					FlxG.switchState(new CustomState());
 					CustomState.statename = menuItems[curSelected];

@@ -150,6 +150,31 @@ class Paths
 			}
 		}
 
+		static public function loadCreditJSON(key:String, ?library:String):Dynamic
+			{
+				var rawJson = OpenFlAssets.getText(Paths.jsonCredit(key, library)).trim();
+		
+				// Perform cleanup on files that have bad data at the end.
+				while (!rawJson.endsWith("}"))
+				{
+					rawJson = rawJson.substr(0, rawJson.length - 1);
+				}
+		
+				try
+				{
+					// Attempt to parse and return the JSON data.
+					return Json.parse(rawJson);
+				}
+				catch (e)
+				{
+					Debug.logError("AN ERROR OCCURRED parsing a JSON file.");
+					Debug.logError(e.message);
+		
+					// Return null.
+					return null;
+				}
+			}
+
 		static public function loadStageJson(key:String, ?library:String):Dynamic
 			{
 				var rawJson = OpenFlAssets.getText(Paths.jsonstage(key, library)).trim();
@@ -388,6 +413,10 @@ class Paths
 	inline static public function jsonChar(key:String, ?library:String)
 		{
 			return getPath('custom/$key.json', TEXT, library);
+		}
+	inline static public function jsonCredit(key:String, ?library:String)
+		{
+			return getPath('data/credits.json', TEXT, library);
 		}
 
 	inline static public function jsonmenuchar(key:String, ?library:String)

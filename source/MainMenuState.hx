@@ -19,6 +19,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.addons.ui.FlxInputText;
+import flixel.addons.ui.FlxUIInputText;
 import lime.app.Application;
 import miniGames.MiniGamesState;
 #if sys
@@ -66,6 +68,7 @@ class MainMenuState extends MusicBeatState
 	public static var Editorsmainyes:Bool = false;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	var interp2:Interp = new Interp();
 
 	#if !switch
 	var optionShit:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/MainMenuItems')); 
@@ -88,13 +91,14 @@ class MainMenuState extends MusicBeatState
 
 	public static var nightly:String = "";
 
-	public static var RealityEngineVer:String = "1.0.1" + nightly;
-	public static var gameVer:String = "0.2.8";
+	public static var RealityEngineVer:String = "1.1.0"; //The engine version
+	public static var gameVer:String = "0.2.8"; //FNF' version
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 
+	var isConsole:Bool = false;
 	public static var finishedFunnyMove:Bool = false;
 
 	override function create()
@@ -297,30 +301,13 @@ class MainMenuState extends MusicBeatState
 				var versionShit:FlxText = new FlxText(5, FlxG.height - 33, 0, "Reality Engine v" + RealityEngineVer, 12);
                 versionShit.scrollFactor.set();
                 versionShit.setFormat(h11, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				if(sys.FileSystem.exists('assets/scripts/mainMenu/versionShit.json'))
-					{
-						var readingVershit:String = sys.io.File.getContent('assets/scripts/mainMenu/versionShit.json');
-						if(readingVershit == "add(FlxText);")
-							{
-								add(versionShit);
-							}
-						
-					}
+				add(versionShit);
                 
 
-				var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Press E to Editor/Mods - FNF v" + gameVer + "", 12);
+				var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Press K to Keybinds - FNF v" + gameVer + "", 12);
 				versionShit.scrollFactor.set();
 				versionShit.setFormat(h11, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				if(sys.FileSystem.exists('assets/scripts/mainMenu/versionShitTwo.json'))
-					{
-						var readingVershit:String = sys.io.File.getContent('assets/scripts/mainMenu/versionShitTwo.json');
-						if(readingVershit == "add(FlxText);")
-							{
-								add(versionShit);
-							}
-						
-					}
-			}
+				add(versionShit);}
 	
 		if(language == "tr")
 			{
@@ -332,15 +319,7 @@ class MainMenuState extends MusicBeatState
 				var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "E ye basarak editorlere ve ya modlara gir - FNF Surumu : " + gameVer + " F e basarak Funkin Mediaya gir", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat(h11, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if(sys.FileSystem.exists('assets/scripts/mainMenu/versionShit.json'))
-			{
-				var readingVershit:String = sys.io.File.getContent('assets/scripts/mainMenu/versionShit.json');
-				if(readingVershit == "add(FlxText);")
-					{
-						add(versionShit);
-					}
-				
-			}
+		add(versionShit);
 		}
 
 		if(language == "ru")
@@ -353,15 +332,8 @@ class MainMenuState extends MusicBeatState
 				var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Press E to Editor/Mods - FNF v" + gameVer, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat(h11, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if(sys.FileSystem.exists('assets/scripts/mainMenu/versionShitTwo.json'))
-			{
-				var readingVershit:String = sys.io.File.getContent('assets/scripts/mainMenu/versionShitTwo.json');
-				if(readingVershit == "add(FlxText);")
-					{
-						add(versionShit);
-					}
-				
-			}}
+		add(versionShit);
+	}
 		
 
 		
@@ -416,7 +388,18 @@ class MainMenuState extends MusicBeatState
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
-		
+		if(FlxG.keys.justPressed.SEVEN)
+			{
+				var	modText:Alphabet = new Alphabet(40, 40, "MAIN MENU EDITOR", true, false);
+				modText.isMenuItem = false;
+				modText.scrollFactor.set();
+				add(modText);
+				remove(selec);
+				var adds:FlxButton = new FlxButton(1190, 640, "Add", addNewMenu);
+				adds.color = FlxColor.GREEN;
+				add(adds);
+			}
+	
 		if(redesignedmenustyle == true)
 			{
 				if(optionShit[curSelected] == 'story_mode')
@@ -489,8 +472,32 @@ class MainMenuState extends MusicBeatState
 		if (!selectedSomethin)
 		{
 			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+			if(isConsole == true)
+				{
+					if(FlxG.keys.justPressed.ESCAPE)
+						{
+							Editorsmainyes = false;
+							isConsole = false;
+							FlxG.switchState(new MainMenuState());
+						}
+				}
 			if(Editorsmainyes == false)
 				{
+					if(FlxG.keys.justPressed.K)
+						{
+							openKeybinds();
+						}
+					if (FlxG.mouse.wheel != 0)
+						{
+							FlxG.sound.play(Paths.sound('scrollMenu'));
+							changeItem(-FlxG.mouse.wheel);
+							selec.text = optionShit[curSelected] + "";
+						}
+
+						if(FlxG.keys.justPressed.QUOTE)
+							{
+								openConsole();
+							}
 					if (gamepad != null)
 						{
 							if (gamepad.justPressed.DPAD_UP)
@@ -542,38 +549,7 @@ class MainMenuState extends MusicBeatState
 			
 						if (controls.BACK)
 						{
-							if(sys.FileSystem.exists('assets/scripts/mainMenu/Events/back.json'))
-								{
-							var readSwitch:String = sys.io.File.getContent('assets/scripts/mainMenu/Events/back.json');
-							if(readSwitch == "switch TitleState")
-								{
-									FlxG.switchState(new TitleState());
-								}
-							if(readSwitch == "switch MainMenuState")
-								{
-									FlxG.switchState(new MainMenuState());
-								}
-							if(readSwitch == "switch FreeplayState")
-								{
-									FlxG.switchState(new FreeplayState());
-								}
-							if(readSwitch == "switch CreditsState")
-								{
-									FlxG.switchState(new CreditsState());
-								}
-							if(readSwitch == "switch EngineEditorsState")
-								{
-									FlxG.switchState(new EngineEditorsState());
-								}
-							if(readSwitch == "switch Options")
-								{
-									FlxG.switchState(new options.MenuOptions());
-								}
-							if(readSwitch == "switch OptionsOld")
-								{
-									FlxG.switchState(new OptionsDirect());
-								}
-							}
+								FlxG.switchState(new TitleState());
 						}
 			
 						if (controls.ACCEPT)
@@ -649,7 +625,114 @@ class MainMenuState extends MusicBeatState
 			}
 			
 		});
+
+		callOnHscript2("update");
 	}
+
+	var eventNa:FlxUIInputText = new FlxUIInputText(350, 665, 450, "Console", 50);
+	
+	function openKeybinds()
+		{
+			Editorsmainyes = true;
+			isConsole = true;
+			var bgalpha:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		    bgalpha.alpha = 0.6;
+		    bgalpha.scrollFactor.set();
+		    add(bgalpha);
+
+			var keybinds:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.loadImage('keybinds'));
+			keybinds.scrollFactor.set();
+			keybinds.setGraphicSize(Std.int(keybinds.width * 1.1));
+			keybinds.updateHitbox();
+			keybinds.screenCenter();
+			keybinds.antialiasing = FlxG.save.data.antialiasing;
+			add(keybinds);
+		}
+	function openConsole()
+		{
+			//console
+			Editorsmainyes = true;
+			isConsole = true;
+			var bgalpha:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		    bgalpha.alpha = 0.6;
+		    bgalpha.scrollFactor.set();
+		    add(bgalpha);
+
+			var console:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.loadImage('console'));
+			console.scrollFactor.set();
+			console.setGraphicSize(Std.int(console.width * 1.1));
+			console.updateHitbox();
+			console.screenCenter();
+			console.antialiasing = FlxG.save.data.antialiasing;
+			add(console);
+
+			
+			eventNa = new FlxUIInputText(350, 665, 450, "Console", 50);
+			eventNa.scrollFactor.set();
+			eventNa.setFormat("PhantomMuff1.5RealityEngine", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			add(eventNa);
+
+			 var button4:FlxButton = new FlxButton(810, 665, "Apply", useCommand);
+			add(button4);
+	
+			var button54:FlxButton = new FlxButton(10, 10, '"', function(){
+				eventNa.text = eventNa.text += '"';
+			});
+			add(button54);
+		}
+	function useCommand()
+		{
+			var expr = "function useCommand(){\n" + eventNa.text + ";\n}";
+			//HScript
+							var parser = new hscript.Parser();
+							parser.allowTypes = true;
+							parser.allowJSON = true;
+							parser.allowMetadata = true;
+							var ast = parser.parseString(expr);
+							interp2.execute(ast);
+							interp2.variables.set("add", add);
+							interp2.variables.set("remove", remove);
+							#if FEATURE_DISCORD
+							interp2.variables.set("DiscordClient", DiscordClient);
+							#end
+							interp2.variables.set("FlxG", flixel.FlxG);
+							interp2.variables.set("CustomState", CustomState);
+							interp2.variables.set("MenuItem", MenuItem);
+							interp2.variables.set("Character", Character);
+							interp2.variables.set("FlxGame", flixel.FlxGame);
+							interp2.variables.set("FlxObject", flixel.FlxObject);
+							interp2.variables.set("MusicBeatState", MusicBeatState);
+							interp2.variables.set("FlxSprite", flixel.FlxSprite);
+							interp2.variables.set("FlxState", flixel.FlxState);
+							interp2.variables.set("FlxSubState", flixel.FlxSubState);
+							interp2.variables.set("FlxGridOverlay", flixel.addons.display.FlxGridOverlay);
+							interp2.variables.set("FlxTrail", flixel.addons.effects.FlxTrail);
+							interp2.variables.set("FlxTrailArea", flixel.addons.effects.FlxTrailArea);
+							interp2.variables.set("FlxEffectSprite", flixel.addons.effects.chainable.FlxEffectSprite);
+							interp2.variables.set("FlxWaveEffect", flixel.addons.effects.chainable.FlxWaveEffect);
+							interp2.variables.set("FlxTransitionableState", flixel.addons.transition.FlxTransitionableState);
+							interp2.variables.set("FlxAtlas", flixel.graphics.atlas.FlxAtlas);
+							interp2.variables.set("FlxAtlasFrames", flixel.graphics.frames.FlxAtlasFrames);
+							interp2.variables.set("FlxMath", flixel.math.FlxMath);
+							interp2.variables.set("FlxPoint", flixel.math.FlxPoint);
+							interp2.variables.set("FlxRect", flixel.math.FlxRect);
+							interp2.variables.set("MusicBeatState", MusicBeatState);
+							interp2.variables.set("FlxSound", flixel.system.FlxSound);
+							interp2.variables.set("FlxText", flixel.text.FlxText);
+							interp2.variables.set("FlxEase", flixel.tweens.FlxEase);
+							interp2.variables.set("FlxTween", flixel.tweens.FlxTween);
+							interp2.variables.set("update", function(elapsed:Float)
+							{
+							});
+							interp2.variables.set("create", function()
+							{
+							});
+							callOnHscript2("useCommand");
+		}
+	function addNewMenu()
+		{
+
+		}
 	function goToState()
 	{
 		var daChoice:String = optionShit[curSelected];
@@ -676,6 +759,8 @@ class MainMenuState extends MusicBeatState
             case 'minigames':
 				FlxG.switchState(new miniGames.MiniGamesState());
 				miniGames.MiniGamesState.h = "mainmenu";
+            case 'quests':
+				FlxG.switchState(new QuestsState());
 
 			default:
 				if(daChoice == "youtube")
@@ -734,6 +819,30 @@ class MainMenuState extends MusicBeatState
             if (interp.variables.exists(functionToCall))
             {
                 var functionH = interp.variables.get(functionToCall);
+                if (params == null)
+                {
+                    var result = null;
+                    result = functionH();
+                    return result;
+                }
+                else
+                {
+                    var result = null;
+                    result = Reflect.callMethod(null, functionH, params);
+                    return result;
+                }
+            }
+            return null;
+        }
+	public function callOnHscript2(functionToCall:String, ?params:Array<Any>):Dynamic
+        {
+            if (interp2 == null)
+            {
+                return null;
+            }
+            if (interp2.variables.exists(functionToCall))
+            {
+                var functionH = interp2.variables.get(functionToCall);
                 if (params == null)
                 {
                     var result = null;

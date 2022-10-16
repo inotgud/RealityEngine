@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="hmm.png"><SubTexture name="NORMAL0000" x="0" y="172" width="308" height="67" frameX="-2" frameY="0" frameWidth="310" frameHeight="67" />
+<SubTexture name="HARD0000" x="0" y="239" width="211" height="67" frameX="-2" frameY="0" frameWidth="216" frameHeight="68" />
+<SubTexture name="EASY0000" x="178" y="87" width="196" height="65" frameX="0" frameY="0" frameWidth="197" frameHeight="70" />
+<SubTexture name="INSANE0000" x="0" y="0" width="375" height="87" frameX="-4" frameY="-5" frameWidth="381" frameHeight="96" />
+<SubTexture name="arrow right0000" x="0" y="87" width="47" height="85" frameX="-6" frameY="-9" frameWidth="53" frameHeight="101" />
+<SubTexture name="arrow push right0000" x="137" y="87" width="41" height="74" frameX="-3" frameY="-5" frameWidth="44" frameHeight="82" />
+<SubTexture name="arrow push left0000" x="95" y="87" width="42" height="75" frameX="-3" frameY="-10" frameWidth="46" frameHeight="90" />
+<SubTexture name="arrow left0000" x="47" y="87" width="48" height="85" frameX="-3" frameY="-4" frameWidth="52" frameHeight="93" />
+</TextureAtlas>

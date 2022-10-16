@@ -224,7 +224,8 @@ class WeekEditor extends MusicBeatState
 					+ abcd + eventName2.text + abcd + ","
 	
 					+ abcd + eventName3.text + abcd
-					+ ehmmm,
+					+ " 
+				]," + "\n" + abcd + "character" + abcd + ": " + abcd + "" + abcd + "}",
 					32);
 
 				sys.io.File.saveContent("assets/custom/custom_weeks/" + eventName5.text + ".json", txt.text);

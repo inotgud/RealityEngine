@@ -51,6 +51,8 @@ class Question extends MusicBeatSubstate
     public static var isWatermark:Bool = false;
     public static var isMenuSong:Bool = false;
     public static var isAntialiasing:Bool = false;
+    public static var isMidSongEvent:Bool = false;
+    public static var isSystemCursor:Bool = false;
     function optionEnter(label:String) {
 		switch(label) {
             case 'On':
@@ -64,8 +66,7 @@ class Question extends MusicBeatSubstate
                     }
                 if (isFPS)
                     {
-                        FlxG.save.data.fps = "on";
-                        (cast(Lib.current.getChildAt(0), Main)).toggleFPS(FlxG.save.data.fps);
+                        
                     }
                 if (isFlashing)
                     {
@@ -84,6 +85,11 @@ class Question extends MusicBeatSubstate
                 if(isAntialiasing)
                     {
                         FlxG.save.data.antialiasing = "on";
+                    }
+                if(isSystemCursor)
+                    {
+                        FlxG.save.data.systemCursorData = true;
+                        FlxG.mouse.useSystemCursor = true;
                     }
 
             case 'Off':
@@ -118,11 +124,21 @@ class Question extends MusicBeatSubstate
                     {
                         FlxG.save.data.antialiasing = "off";
                     }
+                if(isSystemCursor)
+                    {
+                        FlxG.save.data.systemCursorData = false;
+                        FlxG.mouse.useSystemCursor = false;
+                    }
             case 'Down Scroll':
                 FlxG.save.data.downscroll = "Downscroll";
              case 'Up Scroll':
                 FlxG.save.data.downscroll = "Upscroll";
-
+            case 'Bf':
+                FlxG.save.data.abfd = "Bf";
+                close();
+            case 'Dad':
+                FlxG.save.data.abfd = "Dad";
+                close();
 		}
 	}
 
@@ -143,6 +159,10 @@ class Question extends MusicBeatSubstate
                 {
                     options = ['Enabled','Disabled'];
                 }
+                if(isMidSongEvent == true)
+                    {
+                        options = ['Bf','Dad'];
+                    }
            
             blackBox = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		    add(blackBox);

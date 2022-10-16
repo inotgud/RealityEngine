@@ -47,47 +47,48 @@ class EditorsMain extends MusicBeatSubstate
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
+		bg.scrollFactor.set();
 		bg.antialiasing = FlxG.save.data.antialiasing;
 		add(bg);
         FlxG.mouse.visible = true;
-        var button2:FlxButton = new FlxButton(35, 105, "Stage Editor", function(){
+        var button2:FlxButton = new FlxButton(155, 115, "Stage Editor", function(){
 			MainMenuState.Editorsmainyes = false;
 			FlxG.switchState(new engineEditors.StageEditor());
 		});
         add(button2);
 
-		var button3:FlxButton = new FlxButton(35, 130, "Character E", function(){
+		var button3:FlxButton = new FlxButton(155, 140, "Character E", function(){
 			MainMenuState.Editorsmainyes = false;
 			MainMenuState.Editorsnull = true;
 			FlxG.switchState(new engineEditors.CharacterEditor());
 		});
         add(button3);
 
-		var button4:FlxButton = new FlxButton(35, 155, "Week Editor", function(){
+		var button4:FlxButton = new FlxButton(155, 165, "Week Editor", function(){
 			MainMenuState.Editorsmainyes = false;
 			MainMenuState.Editorsnull = true;
 			FlxG.switchState(new engineEditors.WeekEditor());
 		});
         add(button4);
 
-		var button5:FlxButton = new FlxButton(35, 180, "Mini Games", function(){
+		var button5:FlxButton = new FlxButton(155, 190, "Mini Games", function(){
 			MainMenuState.Editorsmainyes = false;
 			FlxG.switchState(new miniGames.MiniGamesState());
 		});
         add(button5);
 
-		var button6:FlxButton = new FlxButton(35, 205, "Event Editor", function(){
+		var button6:FlxButton = new FlxButton(155, 215, "Event Editor", function(){
 			MainMenuState.Editorsmainyes = false;
 			FlxG.switchState(new engineEditors.MidSongEventEditor());
 		});
         add(button6);
 
-		var button8:FlxButton = new FlxButton(35, 230, "Credits Editor", function(){
-			FlxG.switchState(new engineEditors.CreditsEditor());
+		var button8:FlxButton = new FlxButton(155, 240, "Credits Editor", function(){
+			Debug.displayAlert("Credits Editor", "Credits Editor is under maintenance for a while, add credits from json. Sorry for that");
 		});
         add(button8);
 
-		var button7:FlxButton = new FlxButton(35, 255, "Other...", function(){
+		var button7:FlxButton = new FlxButton(155, 265, "Other...", function(){
 			MainMenuState.Editorsmainyes = false;
 			FlxG.switchState(new EngineEditorsState());
 		});

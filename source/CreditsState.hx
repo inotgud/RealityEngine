@@ -24,7 +24,6 @@ using StringTools;
 
 class CreditsState extends MusicBeatState
 {
-	var credits:Array<CreditsMetadata> = [];
 	var iconArray:Array<AttachedSprite> = [];
 	var descBox:AttachedSprite;
 
@@ -34,19 +33,20 @@ class CreditsState extends MusicBeatState
 
 	var descText:FlxText;
 	var bg:FlxSprite;
+	var jsonData = Paths.loadCreditJSON('credits.json');
+
 	var colorTween:FlxTween;
 
 	override function create()
 	{
-		var initCreditlist = CoolUtil.coolTextFile(Paths.txt('data/creditsList'));
-        
-		initCreditlist = CoolUtil.coolTextFile(Paths.txt('data/creditsList'));
-
-		for (i in 0...initCreditlist.length)
-		{
-			var data:Array<String> = initCreditlist[i].split(':');
-			credits.push(new CreditsMetadata(data[0], data[1]));
+		var jsonData = Paths.loadCreditJSON('credits.json');
+	     if (jsonData == null)
+	     {
+				Debug.logError('Failed to parse credits JSON!');
+				return;
 		}
+
+		var data:CreditsJson = cast jsonData;
 
 		/* 
 			if (FlxG.sound.music != null)
@@ -77,82 +77,30 @@ class CreditsState extends MusicBeatState
 		descText.setFormat(Paths.font("muff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descBox.sprTracker = descText;
 		descText.scrollFactor.set();
-		descText.text = 'what';
+		descText.text = '';
 		descText.borderSize = 2.4;
-		add(descText);
 
 		grpCredits = new FlxTypedGroup<Alphabet>();
 		add(grpCredits);
 
-		var contentt1:String = sys.io.File.getContent('assets/data/creditsColors/' + curSelected + '.txt');
-			if(contentt1 == "ORANGE")
+		for (credit in data.credits)
 			{
-				bg.color = FlxColor.ORANGE;
-			}
-			if(contentt1 == "RED")
-			{
-				bg.color = FlxColor.RED;
-			}
-			if(contentt1 == "BROWN")
-			{
-				bg.color = FlxColor.BROWN;
-			}
-			if(contentt1 == "WHITE")
-			{
-				bg.color = FlxColor.WHITE;
-			}
-			if(contentt1 == "YELLOW")
-			{
-				bg.color = FlxColor.YELLOW;
-			}
-			if(contentt1 == "GREEN")
-			{
-				bg.color = FlxColor.GREEN;
-			}
-			if(contentt1 == "BLACK")
-			{
-				bg.color = FlxColor.BLACK;
-			}
-			if(contentt1 == "CYAN")
-			{
-				bg.color = FlxColor.CYAN;
-			}
-			if(contentt1 == "BLUE")
-			{
-				bg.color = FlxColor.BLUE;
-			}
-			if(contentt1 == "PINK")
-			{
-				bg.color = FlxColor.PINK;
-			}
-			if(contentt1 == "PURPLE")
-			{
-				bg.color = FlxColor.PURPLE;
-			}
-			if(contentt1 == "KAWAISPRITECOLOR")
-			{
-				bg.color = 0xFF757EFF;
+				bg.color = FlxColor.fromString("#" + credit.color);
 			}
 
-		for (i in 0...credits.length)
-		{
-			var creditText:Alphabet = new Alphabet(0, (70 * i) + 30, credits[i].modderName, true, false);
-			creditText.isMenuItem = true;
-			creditText.targetY = i;
-			creditText.x += 570;
-			grpCredits.add(creditText);
-
-			var icon:AttachedSprite = new AttachedSprite('credits/' + credits[i].modderName);
-			icon.sprTracker = creditText;
-
-			iconArray.push(icon);
-			add(icon);
-
-			// creditText.x += 40;
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-			// creditText.screenCenter(X);
-		}
-
+				for (credit in data.credits)
+				{
+					var creditText:Alphabet = new Alphabet(0, (70 * 10) + 30, credit.name, true, false);
+					creditText.isMenuItem = true;
+					creditText.x += 570;
+					grpCredits.add(creditText);
+		
+					var icon:AttachedSprite = new AttachedSprite('credits/' + credit.name);
+					icon.sprTracker = creditText;
+		
+					iconArray.push(icon);
+					add(icon);
+				}
 		var versionShit:FlxText = new FlxText(950, FlxG.height - 25, 0, "Press E to Credits Editor", 12);
                 versionShit.scrollFactor.set();
                 versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -167,7 +115,6 @@ class CreditsState extends MusicBeatState
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		descBox.sprTracker = descText;
-		add(descText);
 
 		super.create();
 	}
@@ -195,107 +142,66 @@ class CreditsState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 			changeSelection(-shiftMult);
-			var contentt1:String = sys.io.File.getContent('assets/data/creditsColors/' + curSelected + '.txt');
-			if(contentt1 == "RED")
+			var jsonData2 = Paths.loadCreditJSON('credits.json');
+			if (jsonData2 == null)
 			{
-				bg.color = FlxColor.RED;
-			}
-			if(contentt1 == "BROWN")
-			{
-				bg.color = FlxColor.BROWN;
-			}
-			if(contentt1 == "WHITE")
-			{
-				bg.color = FlxColor.WHITE;
-			}
-			if(contentt1 == "YELLOW")
-			{
-				bg.color = FlxColor.YELLOW;
-			}
-			if(contentt1 == "GREEN")
-			{
-				bg.color = FlxColor.GREEN;
-			}
-			if(contentt1 == "BLACK")
-			{
-				bg.color = FlxColor.BLACK;
-			}
-			if(contentt1 == "CYAN")
-			{
-				bg.color = FlxColor.CYAN;
-			}
-			if(contentt1 == "BLUE")
-			{
-				bg.color = FlxColor.BLUE;
-			}
-			if(contentt1 == "PINK")
-			{
-				bg.color = FlxColor.PINK;
-			}
-			if(contentt1 == "PURPLE")
-			{
-				bg.color = FlxColor.PURPLE;
-			}
-			if(contentt1 == "KAWAISPRITECOLOR")
-			{
-				bg.color = 0xFF757EFF;
-			}
+				   Debug.logError('Failed to parse credits JSON!');
+				   return;
+		   }
+	
+		   var data2:CreditsJson = cast jsonData2;
+				for (credit in data2.credits)
+					{
+						remove(bg);
+		                bg.color = FlxColor.fromString("#" + credit.color);
+		                add(bg);
+		                descText.text = credit.desc;
+					}
+			
 		}
 		if (downP)
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 			changeSelection(shiftMult);
-			var contentt1:String = sys.io.File.getContent('assets/data/creditsColors/' + curSelected + '.txt');
-			if(contentt1 == "RED")
+			var jsonData2 = Paths.loadCreditJSON('credits.json');
+		if (jsonData2 == null)
+		{
+			   Debug.logError('Failed to parse credits JSON!');
+			   return;
+	   }
+
+	   var data2:CreditsJson = cast jsonData2;
+			for (credit in data2.credits)
+				{
+					remove(bg);
+	                bg.color = FlxColor.fromString("#" + credit.color);
+	                 add(bg);
+	                descText.text = credit.desc;
+				}
+			
+		  }
+
+		if (FlxG.mouse.wheel != 0)
 			{
-				bg.color = FlxColor.RED;
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+				changeSelection(-FlxG.mouse.wheel);
 			}
-			if(contentt1 == "BROWN")
-			{
-				bg.color = FlxColor.BROWN;
-			}
-			if(contentt1 == "WHITE")
-			{
-				bg.color = FlxColor.WHITE;
-			}
-			if(contentt1 == "YELLOW")
-			{
-				bg.color = FlxColor.YELLOW;
-			}
-			if(contentt1 == "GREEN")
-			{
-				bg.color = FlxColor.GREEN;
-			}
-			if(contentt1 == "BLACK")
-			{
-				bg.color = FlxColor.BLACK;
-			}
-			if(contentt1 == "CYAN")
-			{
-				bg.color = FlxColor.CYAN;
-			}
-			if(contentt1 == "BLUE")
-			{
-				bg.color = FlxColor.BLUE;
-			}
-			if(contentt1 == "PINK")
-			{
-				bg.color = FlxColor.PINK;
-			}
-			if(contentt1 == "PURPLE")
-			{
-				bg.color = FlxColor.PURPLE;
-			}
-			if(contentt1 == "KAWAISPRITECOLOR")
-			{
-				bg.color = 0xFF757EFF;
-			}
-		}
 
 		if(controls.ACCEPT)
 		{
-			var content:String = sys.io.File.getContent('assets/data/' + curSelected + '.txt');
+			/*var jsonData2 = Paths.loadCreditJSON('credits.json');
+			if (jsonData2 == null)
+			{
+				   Debug.logError('Failed to parse credits JSON!');
+				   return;
+		   }
+	
+		   var data2:CreditsJson = cast jsonData2;
+		   for (credit in data2.credits)
+			{
+			var content:String = credit.link;
 			CoolUtil.browserLoad(content);
+			}*/
 		}
 
 		if (controls.BACK)
@@ -304,15 +210,24 @@ class CreditsState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
+		var jsonData2 = Paths.loadCreditJSON('credits.json');
+		if (jsonData2 == null)
+		{
+			   Debug.logError('Failed to parse credits JSON!');
+			   return;
+	   }
+
+	   var data2:CreditsJson = cast jsonData2;
+	   
 		curSelected += change;
 
-		if (curSelected < 0)
-			curSelected = credits.length - 1;
-		if (curSelected >= credits.length)
-			curSelected = 0;
+				if (curSelected < 0)
+					curSelected = data2.length - 1;
+				if (curSelected >= data2.length)
+					curSelected = 0;
 
-		descText.text = credits[curSelected].desc;
 
+				
 		// selector.y = (70 * curSelected) + 30;
 		var bullShit:Int = 0;
 
@@ -333,14 +248,14 @@ class CreditsState extends MusicBeatState
 	}
 }
 
-class CreditsMetadata
-{
-	public var modderName:String = "";
-	public var desc:String = "";
-
-	public function new(name:String, desc:String)
-	{
-		this.modderName = name;
-		this.desc = desc;
-	}
+typedef CreditsJson = {
+	var length:Int;
+    var credits:Array<CreditsJsonData>;
 }
+
+typedef CreditsJsonData = {
+    var name:String;
+    var link:String;
+	var desc:String;
+    var color:String;
+} 

@@ -1,0 +1,38 @@
+{
+  "camzoom": 1,
+  "stagesprites": [
+    {
+      "name": "bg",
+      "x": -600,
+      "y": -200,
+      "image": "stageback",
+      "active": false,
+      "scrollFactor": true,
+      "animated": false,
+      "sparrowatlas": "",
+      "startanim": ""
+    },
+        {
+      "name": "stageFront",
+      "x": -650,
+      "y": 600,
+      "image": "stagefront",
+      "active": false,
+      "scrollFactor": true,
+      "animated": false,
+      "sparrowatlas": "",
+      "startanim": ""
+    },
+    {
+      "name": "stageCurtains",
+      "x": -500,
+      "y": -300,
+      "image": "stagecurtains",
+      "active": false,
+      "scrollFactor": true,
+      "animated": false,
+      "sparrowatlas": "",
+      "startanim": ""
+    }
+  ]
+}
