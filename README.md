@@ -63,7 +63,8 @@ A FNF Engine based on Kade Engine. This engine is softcoded so you don't need to
    haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit                            
    haxelib git faxe https://github.com/uhrobots/faxe                
    haxelib git polymod https://github.com/MasterEric/polymod.git               
-   haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc                   
+   haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc       
+   haxelib install winapi                               
    haxelib git extension-webm https://github.com/KadeDev/extension-webm                
    lime rebuild extension-webm <ie. windows, macos, linux>
    ```
