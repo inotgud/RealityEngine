@@ -1,3 +1,0 @@
-function beatHit(beat)
-
-end

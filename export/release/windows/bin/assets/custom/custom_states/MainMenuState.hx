@@ -1,6 +1,0 @@
-import('MainMenuState');
-
-function create()
-{
-
-}

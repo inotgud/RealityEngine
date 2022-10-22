@@ -1,7 +1,0 @@
-story_mode
-freeplay 
-quests 
-credits 
-donate 
-options 
-mods

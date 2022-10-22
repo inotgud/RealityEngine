@@ -1,3 +1,0 @@
-Default:Friday Night Funkin'
-ModExample:No Mod
-RealityEngineHelper:Help Reality Engine Modding

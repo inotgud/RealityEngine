@@ -1,3 +1,0 @@
-Edit it from the psdFiles section of the art file in the Reality engine source code.
-and enter the credits menu then right key click
-or draw your own custom credit menu
