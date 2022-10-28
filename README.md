@@ -1,3 +1,6 @@
+# Read Before Use
+This engine is currently in beta. If you can't mod, you're probably going to say bad things to us.
+
 # Friday Night Funkin' - Reality Engine
 ![Logo](https://i.hizliresim.com/cglcucm.png)
 
