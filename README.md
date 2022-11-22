@@ -50,11 +50,11 @@ A FNF Engine based on Kade Engine. This engine is softcoded so you don't need to
    ```
    haxelib install lime 7.9.0            
    haxelib install openfl                    
-   haxelib install flixel                
+   haxelib install flixel 4.11.0               
    haxelib install flixel-tools                            
-   haxelib install flixel-ui                             
+   haxelib install flixel-ui 2.4.0                             
    haxelib install hscript                   
-   haxelib install flixel-addons                
+   haxelib install flixel-addons 2.11.0               
    haxelib install actuate                                       
    haxelib run lime setup                   
    haxelib run lime setup flixel                
