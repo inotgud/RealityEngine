@@ -29,12 +29,12 @@ jobs:
           haxelib install lime 7.9.0
           RefreshEnv
           haxelib install openfl
-          haxelib install flixel
+          haxelib install flixel 4.11.0
           haxelib run lime setup flixel
           haxelib run lime setup
           haxelib install flixel-tools
-          haxelib install flixel-addons
-          haxelib install flixel-ui
+          haxelib install flixel-addons 2.11.0
+          haxelib install flixel-ui 2.4.0
           haxelib install winapi
           haxelib install hscript
           haxelib install flixel-addons
